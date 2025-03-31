@@ -63,6 +63,7 @@ _CHIP_ID_CST816D = const(0xB6)
 _CHIP_ID_CST820 = const(0xB7)
 
 EVENTS = ("PRESS", "RELEASE", "TOUCHING")
+SUPPORTED = (_CHIP_ID_CST826, _CHIP_ID_CST816D)
 
 
 class Adafruit_CST8XX:
@@ -80,8 +81,8 @@ class Adafruit_CST8XX:
         fw_version, _, _, chip_type = struct.unpack("<HBBH", chip_data)
         print("fw_version: {:02X}, chip_type: {:02X}".format(fw_version, chip_type))
 
-        if chip_type not in (_CHIP_ID_CST826,):
-            raise RuntimeError("Did not find CST8XX chip")
+        if chip_type not in SUPPORTED:
+            raise RuntimeError("Did not find supported CST8XX chip")
 
         if debug:
             print("Firmware vers %04X" % int(fw_version))
